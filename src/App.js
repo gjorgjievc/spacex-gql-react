@@ -1,25 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import './App.css';
+import Routes from './containers/Routes';
+import { ThemeProvider } from '@mui/material';
+import {theme} from './ui/Theme';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const client = new ApolloClient({
+  uri: 'https://api.spacex.land/graphql',
+  cache: new InMemoryCache(),
+})
+
+const App = () => (
+  <ApolloProvider client={client}>
+    <ThemeProvider theme={theme}>
+      <Routes />
+    </ThemeProvider>
+  </ApolloProvider>
+);
 
 export default App;
